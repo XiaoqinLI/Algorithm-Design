@@ -11,9 +11,9 @@ public class OliveJar {
 	static {
 		System.out.println("Initializing...");
 		olives =  new ArrayList<>();
-		olives.add(new Olive("Kalamata",0x000000));
-		olives.add(new Olive("Picholine",0x00FF00));
-		olives.add(new Olive("Kalamata",0x000000));
+		olives.add(new Olive(OliveName.KALAMATA,0x000000));
+		olives.add(new Olive(OliveName.PICHOLINE,0x00FF00));
+		olives.add(new Olive(OliveName.LIGURIO,0x000000));
 
 	}
 	

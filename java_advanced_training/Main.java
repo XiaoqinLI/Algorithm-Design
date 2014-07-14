@@ -9,12 +9,12 @@ public class Main {
 
 
 	public static void simplifiedGenerics(){
-		Olive o1 = new Olive("Kalamata", 0x000000);
-		Olive o2 = new Olive("Picholine", 0x00FF00);
-		Olive o3 = new Olive("Ligurio", 0x000000);
+		Olive o1 = new Olive(OliveName.KALAMATA, 0x000000);
+		Olive o2 = new Olive(OliveName.PICHOLINE, 0x00FF00);
+		Olive o3 = new Olive(OliveName.LIGURIO, 0x000000);
 
 		Olive[] olives = {o1, o2, o3};
-		ArrayList<Olive> olives2 =  new ArrayList<>();
+		ArrayList<Olive> olives2 =  new ArrayList<>();// no need redeclare again
 		olives2.add(o1);
 		olives2.add(o2);
 		olives2.add(o3);
@@ -25,12 +25,13 @@ public class Main {
 		int numberOflives = 1_000_000_000;
 		NumberFormat formatter = NumberFormat.getInstance();
 		System.out.println(formatter.format(numberOflives));
+		
 	}
 
 	public static void stringInSwitch(){
-		Olive o1 = new Olive("Kalamata", 0x000000);
-		Olive o2 = new Olive("Picholine", 0x00FF00);
-		Olive o3 = new Olive("Ligurio", 0x000000);
+		Olive o1 = new Olive(OliveName.KALAMATA, 0x000000);
+		Olive o2 = new Olive(OliveName.PICHOLINE, 0x00FF00);
+		Olive o3 = new Olive(OliveName.LIGURIO, 0x000000);
 
 		ArrayList<Olive> list =  new ArrayList<>();
 
@@ -45,13 +46,13 @@ public class Main {
 		Olive o = list.get(index);
 
 		switch (o.oliveName){
-		case "Kalamata":
+		case KALAMATA:
 			System.out.println("It's Greek!");
 			break;
-		case "Picholine":
+		case PICHOLINE:
 			System.out.println("It's French!");
 			break;
-		case "Ligurio":
+		case LIGURIO:
 			System.out.println("It's Italian!");
 			break;
 
@@ -71,17 +72,56 @@ public class Main {
 	
 	public static void olivesJarNonStaticDemo(){
 		System.out.println("Statrting application...");
-		ArrayList<Olive> olives = new OliveJarNonStatic(3,"Kalamata", 0x000000).olives2;
+		ArrayList<Olive> olives = new OliveJarNonStatic(3,OliveName.KALAMATA, 0x000000).olives2;
+		
 		for(Olive o:olives){
+			System.out.println("It's a " + o.oliveName + " olive!");
+		}
+		
+		ArrayList<Olive> olives1 = new OliveJarNonStatic().olives2;
+		for(Olive o:olives1){
 			System.out.println("It's a " + o.oliveName + " olive!");
 		}
 	}
 	
+	// Class class allows you to dynamically instantiate classes.
+	public static void memberAndLocalInnerClasses(){
+		MemberAndLocalInnerClasses jar = new MemberAndLocalInnerClasses();
+		jar.addOlive("Kalamata", 0x000000);
+		jar.addOlive("Kalamata", 0x000000);
+		jar.addOlive("Kalamata", 0x000000);
+		jar.addOlive("Kalamata", 0x000000);
+		jar.reportOlives();
+	}
+	
+	public static void classClass(){
+		Olive o = new Olive(OliveName.PICHOLINE, 0x00FF00);
+		
+		Class<?> c = o.getClass();
+		
+		System.out.println(c);
+		System.out.println(c.getName());
+		System.out.println(c.getSimpleName());		
+	}
+	
 	public static void main(String[] args) throws Exception {
-		simplifiedGenerics();
+		
+		System.out.println("--------------simplifiedGenerics-----------------");
+		simplifiedGenerics();		
+		System.out.println("--------------numericLiteralDemo-----------------");
 		numericLiteralDemo();
-		stringInSwitch();
-		olivesJarStaticDemo();
-		olivesJarNonStaticDemo();
+		System.out.println("--------------stringInSwitch-----------------");
+		stringInSwitch();		
+		System.out.println("--------------olivesJarStaticDemo-----------------");
+		olivesJarStaticDemo();		
+		System.out.println("--------------olivesJarNonStaticDemo-----------------");
+		olivesJarNonStaticDemo();	
+		System.out.println("--------------memberClasses-----------------");
+		memberAndLocalInnerClasses();
+		System.out.println("--------------classClass-----------------");
+		classClass();
+		System.out.println("--------------usingHashSet-----------------");
+		usingHashSet();
+		
 	}
 }

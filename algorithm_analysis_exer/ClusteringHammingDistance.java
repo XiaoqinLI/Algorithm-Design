@@ -25,7 +25,6 @@ public class ClusteringHammingDistance {
 	public static BitSet find(BitSet i){  
 		ArrayList<BitSet> tempIndexPath = new ArrayList<BitSet>();
 		while (!i.equals(clusters.get(i).get(0))){  
-			//b = (BitSet) clusters.get(b).clone();
 			tempIndexPath.add(i);
 			i = (BitSet) clusters.get(i).get(0);  
 		}
@@ -36,8 +35,9 @@ public class ClusteringHammingDistance {
 	}  
 
 	public static void union (BitSet a, BitSet b){  
-		//actually smaller cluster should be merged with bigger one. Here do it randomly. Cluster sizes should be maintained for  
-		//it to work.  
+		// Union by rank
+		// the Xtree with lower rank should be merged with the ones with high rank. 
+		// if the rank is due, then merge to either one, and new leader rank+1
 		BitSet pa = find(a);  
 		BitSet pb = find(b);
 		
@@ -62,6 +62,7 @@ public class ClusteringHammingDistance {
 	public static ArrayList<BitSet> getMembers(BitSet s){  
 		BitSet sbackup = (BitSet) s.clone();  
 		ArrayList<BitSet> ret = new ArrayList<BitSet>();  
+		// flip 1 bits to create distance of 1, collect them  
 		for(int i = 0; i <= numBits-1; i++){  
 			BitSet s1 = new BitSet();  
 			s1.clear();  
@@ -71,7 +72,7 @@ public class ClusteringHammingDistance {
 				ret.add(s1);  
 			}  
 		}  
-		//now flip 2 bits to create distance of 2  
+		// flip 2 bits to create distance of 2  
 		for(int i = 0; i <= numBits-1; i++){  
 			BitSet s1 = new BitSet();  
 			s1.clear();  
@@ -89,7 +90,6 @@ public class ClusteringHammingDistance {
 
 	public static void main(String[] args) throws IOException, FileNotFoundException{ 
 		long startTime = System.currentTimeMillis();
-		//int distance = 2; //must be <= 2      
 		BufferedReader br = new BufferedReader(new FileReader("clustering_big.txt"));  
 		String line = br.readLine();  
 		n = Integer.parseInt(line.split("(\\s)+")[0]);  
@@ -100,15 +100,15 @@ public class ClusteringHammingDistance {
 			clusters.put(b, new ArrayList());
 			for (int kk = 0; kk < 3; kk++ ){
 				clusters.get(b).add(b); // first ele in the list is bitset itself
-				clusters.get(b).add(0); // third ele is the rank of this bitset
+				clusters.get(b).add(0); // second ele is the rank of this bitset
 			}
 		} 
-		// should have round almost 200,000 vertex, 
-		// scan each bitset in the hushmap
+		// the duplicates will be auto merged.
+		
+		// scan each bitset in the hashmap
 		for (BitSet bitEntry : clusters.keySet()){ 
 			//get all bitsets for all at distance of 1 or 2 from s  
 			ArrayList<BitSet> members = getMembers(bitEntry);  
-			//System.out.println(" members sizes "+members.size());  
 			
 			for (BitSet bitMember : members){  
 				union(bitEntry,bitMember);  
