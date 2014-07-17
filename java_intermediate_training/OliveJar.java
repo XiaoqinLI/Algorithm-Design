@@ -1,4 +1,4 @@
-package java_advanced_training;
+package java_intermediate_training;
 
 import java.util.ArrayList;
 
@@ -11,9 +11,9 @@ public class OliveJar {
 	static {
 		System.out.println("Initializing...");
 		olives =  new ArrayList<>();
-		olives.add(new Olive(OliveName.KALAMATA,0x000000));
-		olives.add(new Olive(OliveName.PICHOLINE,0x00FF00));
-		olives.add(new Olive(OliveName.LIGURIO,0x000000));
+		olives.add(new Olive(OliveName.KALAMATA,OliveColor.BLACK));
+		olives.add(new Olive(OliveName.PICHOLINE,OliveColor.GREEN));
+		olives.add(new Olive(OliveName.LIGURIO,OliveColor.GOLDEN));
 
 	}
 	

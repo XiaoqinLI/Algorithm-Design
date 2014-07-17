@@ -1,4 +1,4 @@
-package java_advanced_training;
+package java_intermediate_training;
 
 import java.util.ArrayList;
 

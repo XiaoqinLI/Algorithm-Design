@@ -1,4 +1,4 @@
-package java_advanced_training;
+package java_intermediate_training;
 
 public enum OliveName {
 	// each identifier is associated with a string
